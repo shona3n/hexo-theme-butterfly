@@ -133,9 +133,9 @@
   .post-title
     @extend .limit-more-line
     margin-bottom: .4rem
-    color: var(--white)
-    font-weight: normal
     font-size: 2.5em
+    font-weight: normal
+    color: var(--white)
     line-height: 1.5
     -webkit-line-clamp: 3
 
@@ -193,9 +193,12 @@
       border-bottom: 1px solid var(--light-grey)
       color: var(--text-highlight-color)
 
-    #post-meta,
-    #post-meta a
-      color: #78818a
+[data-theme='light']
+  #post
+    #post-info
+      #post-meta,
+      #post-meta a
+        color: #78818a
 
 // css hack
 // all browser in ios and safari in all apple device
@@ -346,10 +349,7 @@ _:future,
         font-size: inherit
 
     .menus_items
-      position: absolute
-      left: 0
-      visibility: hidden
-      opacity: 0
+      display: none !important
 
     #search-button span
       display: none !important

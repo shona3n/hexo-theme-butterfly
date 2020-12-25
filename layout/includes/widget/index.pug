@@ -1,22 +1,13 @@
-#aside-content.aside-content
-  //- post
-  if is_post()
-    if showToc && theme.toc.style_simple
-      .sticky_layout
+#aside_content.aside_content
+  !=partial('includes/widget/card_author', {}, {cache:theme.fragment_cache})
+  !=partial('includes/widget/card_announcement', {}, {cache:theme.fragment_cache})
+  .sticky_layout
+    if is_post()
+      if showToc
         include ./card_post_toc.pug
+      !=partial('includes/widget/card_recent_post', {}, {cache:theme.fragment_cache})
+      !=partial('includes/widget/card_ad', {}, {cache:theme.fragment_cache})
     else
-      !=partial('includes/widget/card_author', {}, {cache:theme.fragment_cache})
-      !=partial('includes/widget/card_announcement', {}, {cache:theme.fragment_cache})
-      .sticky_layout
-        if showToc
-          include ./card_post_toc.pug
-        !=partial('includes/widget/card_recent_post', {}, {cache:theme.fragment_cache})
-        !=partial('includes/widget/card_ad', {}, {cache:theme.fragment_cache})
-  else
-    //- page
-    !=partial('includes/widget/card_author', {}, {cache:theme.fragment_cache})
-    !=partial('includes/widget/card_announcement', {}, {cache:theme.fragment_cache})
-    .sticky_layout
       !=partial('includes/widget/card_recent_post', {}, {cache:theme.fragment_cache})
       !=partial('includes/widget/card_ad', {}, {cache:theme.fragment_cache})
       !=partial('includes/widget/card_newest_comment', {}, {cache:theme.fragment_cache})
@@ -24,4 +15,3 @@
       !=partial('includes/widget/card_tags', {}, {cache:theme.fragment_cache})
       !=partial('includes/widget/card_archives', {}, {cache:theme.fragment_cache})
       !=partial('includes/widget/card_webinfo', {}, {cache:theme.fragment_cache})
-      !=partial('includes/widget/card_self', {}, {cache:theme.fragment_cache})

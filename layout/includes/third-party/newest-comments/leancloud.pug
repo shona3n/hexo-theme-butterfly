@@ -1,5 +1,3 @@
-- let default_avatar = theme.valine.avatar
-
 script(src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.17.0/js/md5.min.js")
 script.
   window.addEventListener('load', () => {
@@ -17,9 +15,8 @@ script.
     }
 
     const getIcon = (icon, mail) => {
-      if (icon) return icon
-      
-      let defaultIcon = '!{ default_avatar ? `?d=${default_avatar}` : ''}'
+      if (icon) return icon 
+      let defaultIcon = '!{ theme.newest_comments.leancloud.default_avatar ? `?d=${theme.newest_comments.leancloud.default_avatar}` : ''}'
       let iconUrl = `https://gravatar.loli.net/avatar/${md5(mail.toLowerCase()) + defaultIcon}`
       return iconUrl
     }
@@ -27,46 +24,37 @@ script.
     const generateHtml = array => {
       let result = ''
 
-      if (array.length) {
-        for (let i = 0; i < array.length; i++) {
-          result += '<div class=\'aside-list-item\'>'
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class=\'aside-list-item\'>'
 
-          if (!{theme.newest_comments.avatar}) {
-            let name = 'src'
-            if(!{theme.lazyload.enable}) {
-              name = 'data-lazy-src'
-            }
-            result += `<a href='${array[i].url}' class="thumbnail"><img ${name}='${getIcon(array[i].avatar, array[i].mail)}' alt='${array[i].nick}'></a>`
-          }
-
-          result += `<div class='content'>
-          <a class='comment' href='${array[i].url}'>${array[i].content}</a>
-          <div class='name'><span>${array[i].nick}</span><time> / ${btf.diffDate(array[i].date, true)}</time></div>
-          </div></div>`
+        if (!{theme.newest_comments.avatar}) {
+          result += `<a href='${array[i].url}' class="thumbnail"><img src='${getIcon(array[i].avatar, array[i].mail)}' alt='${array[i].nick}'></a>`
         }
-      } else {
-        result += '!{_p("aside.card_newest_comments.zero")}'
+
+        result += `<div class='content'>
+        <a class='comment' href='${array[i].url}'>${array[i].content}</a>
+        <div class='name'><span>${array[i].nick}</span><time> / ${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
       }
 
       let $dom = document.querySelector('#card-newest-comments .aside-list')
       $dom.innerHTML= result
-      window.lazyLoadInstance && window.lazyLoadInstance.update()
       window.pjax && window.pjax.refresh($dom)
     }
 
-    const getComment = () => {
+    const getValineData = () => {
         let serverURL = ''
-        if (!{Boolean(theme.valine.serverURLs)}) {
-          serverURL = '!{theme.valine.serverURLs}'
+        if (!{Boolean(theme.newest_comments.leancloud.serverURL)}) {
+          serverURL = '!{theme.newest_comments.leancloud.serverURL}'
         } else {
-          serverURL = 'https://!{theme.valine.appId.substring(0,8)}.api.lncldglobal.com'
+          serverURL = 'https://!{theme.newest_comments.leancloud.appId.substring(0,8)}.api.lncldglobal.com'
         }
 
       var settings = {
         "method": "GET",
         "headers": {
-          "X-LC-Id": '!{theme.valine.appId}',
-          "X-LC-Key": '!{theme.valine.appKey}',
+          "X-LC-Id": '!{theme.newest_comments.leancloud.appId}',
+          "X-LC-Key": '!{theme.newest_comments.leancloud.appKey}',
           "Content-Type": "application/json"
         },
       }
@@ -86,7 +74,7 @@ script.
           })
           saveToLocal.set('leancloud-newest-comments', JSON.stringify(valineArray), 10/(60*24))
           generateHtml(valineArray)
-        }).catch(e => {
+        }).catch(e => { 
           const $dom = document.querySelector('#card-newest-comments .aside-list')
           $dom.innerHTML= "!{_p('aside.card_newest_comments.error')}"
         }) 
@@ -98,7 +86,7 @@ script.
         if (data) {
           generateHtml(JSON.parse(data))
         } else {
-          getComment()
+          getValineData()
         }
       }
     }

@@ -1,5 +1,4 @@
-:root
-  --global-font-size: $font-size
+[data-theme='light']
   --global-bg: $body-bg
   --font-color: $font-black
   --hr-border: lighten($theme-hr-color, 50%)
@@ -37,7 +36,7 @@ body
   min-height: 100%
   background: var(--global-bg)
   color: var(--font-color)
-  font-size: var(--global-font-size)
+  font-size: $font-size
   font-family: $font-family
   line-height: $text-line-height
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
@@ -157,8 +156,8 @@ if $site-name-font
   #site-title,
   #site-subtitle,
   #site-name,
-  #aside-content .author-info__name,
-  #aside-content .author-info__description
+  #aside_content .author-info__name,
+  #aside_content .author-info__description
     font-family: $site-name-font
 
 .is-center

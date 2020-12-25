@@ -88,9 +88,8 @@ document.addEventListener('DOMContentLoaded', function () {
     translateButtonObject = document.getElementById('translateLink')
     if (translateButtonObject) {
       if (currentEncoding !== targetEncoding) {
-        setTimeout(translateBody, translateDelay)
-        if (targetEncoding === 1) translateButtonObject.innerHTML = msgToSimplifiedChinese
-        else translateButtonObject.innerHTML = msgToTraditionalChinese
+        setTimeout(function () { translateBody() }, translateDelay)
+        if (targetEncoding === 1) { translateButtonObject.innerHTML = msgToSimplifiedChinese } else translateButtonObject.innerHTML = msgToTraditionalChinese
       }
       translateButtonObject.addEventListener('click', translatePage, false)
     }
