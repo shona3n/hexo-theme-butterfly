@@ -51,10 +51,15 @@ if hexo-config('darkmode.enable') || hexo-config('display_mode') == 'dark'
       .aplayer
         filter: brightness(.8)
 
+      kbd
+        border-color: #696969
+        background-color: #525252
+        color: #e2f1ff
+
     // 頭部
     #page-header
-      & > #nav.fixed,
-      &.no-top-img #nav
+      &.nav-fixed > #nav,
+      &.not-top-img > #nav
         background: alpha(#121212, .8)
         box-shadow: 0 5px 6px -5px rgba(133, 133, 133, 0)
 
